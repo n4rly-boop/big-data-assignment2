@@ -6,7 +6,8 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder \
     .appName('data preparation') \
     .master("local") \
-    .config("spark.sql.parquet.enableVectorizedReader", "true") \
+    .config("spark.sql.parquet.enableVectorizedReader", "false") \
+    .config("spark.driver.memory", "2g") \
     .getOrCreate()
 
 
