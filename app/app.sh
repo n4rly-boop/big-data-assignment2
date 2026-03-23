@@ -1,26 +1,32 @@
 #!/bin/bash
-# Start ssh server
-service ssh restart 
+set -e
 
-# Starting the services
+# start ssh
+service ssh restart
+
+# start hadoop services
 bash start-services.sh
 
-# Creating a virtual environment
+# setup python env
 python3 -m venv .venv
 source .venv/bin/activate
-
-# Install any packages
-pip install -r requirements.txt  
-
-# Package the virtual env.
+pip install -r requirements.txt
 venv-pack -o .venv.tar.gz
 
-# Collect data
+# prepare data
 bash prepare_data.sh
 
+# index documents
+bash index.sh /input/data
 
-# Run the indexer
-bash index.sh
+# run some queries
+echo ""
+echo "========================================="
+echo "  sample queries"
+echo "========================================="
 
-# Run the ranker
-bash search.sh "this is a query!"
+bash search.sh "world war history"
+echo ""
+bash search.sh "music album rock"
+echo ""
+bash search.sh "film movie director"
