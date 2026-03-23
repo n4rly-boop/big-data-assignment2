@@ -14,7 +14,6 @@ for line in sys.stdin:
     tf = parts[2]
 
     if term != current_term:
-        # emit previous term
         if current_term is not None:
             df = len(postings)
             postings_str = ','.join(postings)

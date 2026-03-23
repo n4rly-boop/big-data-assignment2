@@ -77,7 +77,7 @@ def bm25_search(terms, N, avg_dl, vocab, postings, docs, k1=1.5, b=0.75):
         results = (
             rdd
             .map(score)
-            .reduceByKey(lambda a, b: a + b)
+            .reduceByKey(lambda x, y: x + y)
             .sortBy(lambda x: x[1], ascending=False)
             .take(10)
         )

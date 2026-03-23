@@ -5,18 +5,17 @@ from cassandra.cluster import Cluster
 
 
 def wait_for_cassandra():
-    for i in range(30):
+    # cassandra takes a while to start up
+    for i in range(20):
         try:
             c = Cluster(['cassandra-server'])
-            s = c.connect()
-            s.shutdown()
+            c.connect()
             c.shutdown()
-            print("cassandra ready")
             return
         except Exception:
-            print(f"waiting for cassandra... ({i+1}/30)")
+            print(f"waiting for cassandra... {i+1}")
             time.sleep(5)
-    print("cassandra not available", file=sys.stderr)
+    print("cassandra not available")
     sys.exit(1)
 
 

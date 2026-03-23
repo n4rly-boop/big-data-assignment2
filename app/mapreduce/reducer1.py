@@ -19,6 +19,6 @@ for line in sys.stdin:
     total_dl += dl
     num_docs += 1
 
-# emit aggregate stats at the end
+# print avg stats
 avg_dl = total_dl / num_docs if num_docs > 0 else 0
 print(f"__STATS__\t{num_docs}\t{avg_dl:.4f}")
