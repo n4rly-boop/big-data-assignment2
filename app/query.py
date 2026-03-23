@@ -92,14 +92,11 @@ if __name__ == "__main__":
         sys.exit(1)
 
     query = " ".join(sys.argv[1:])
-    print(f"query: {query}")
 
     terms = preprocess(query)
     if not terms:
         print("no valid terms")
         sys.exit(0)
-
-    print(f"terms: {terms}")
 
     N, avg_dl, vocab, postings, docs = get_data_from_cassandra(terms)
 
@@ -107,13 +104,8 @@ if __name__ == "__main__":
         print("no matching documents")
         sys.exit(0)
 
-    print(f"corpus: {N} docs, avg_dl={avg_dl:.1f}")
-    print(f"matching terms: {list(vocab.keys())}")
-    print(f"candidate docs: {len(set(d for _, d, _ in postings))}")
-
     results = bm25_search(terms, N, avg_dl, vocab, postings, docs)
 
-    print(f"\nTop {len(results)} results:")
-    for i, (doc_id, sc) in enumerate(results, 1):
+    for doc_id, sc in results:
         title = docs[doc_id][0]
-        print(f"  {i}. [{doc_id}] {title} (score: {sc:.4f})")
+        print(f"{doc_id}\t{title}")
