@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-echo "searching for: $1"
+echo "searching for: $1" >&2
 
 source .venv/bin/activate
 
